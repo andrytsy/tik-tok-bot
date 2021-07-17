@@ -17,9 +17,6 @@ const pass = '1QazxsW@';
         await page.waitForSelector('iframe[src^="https://www.tiktok.com/login/"]')
         await page.evaluate(() => {
             const authFrame = document.querySelector('iframe[src^="https://www.tiktok.com/login/"]').contentWindow
-            // const appContainer = authFrame.document.querySelector('[class^="tiktok-app-container-"]');
-
-            console.log('authFrame', authFrame)
 
             const authFrameMutationCallback = (mutationsList, observer) => {
                 mutationsList.forEach((mutation) => {
@@ -39,14 +36,9 @@ const pass = '1QazxsW@';
             observer.observe(authFrame.document.body, {
                 attributes: true,
                 childList: true,
-                subtree: true
+                subtree: true,
             });
         });
-
-        // if (!authFrame) {
-        //     console.log("Auth iFrame not found! TikTok wins!");
-        //     process.exit(0);
-        // }
 
         // await browser.close();
     } catch (e) {

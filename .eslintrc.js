@@ -4,20 +4,12 @@ module.exports = {
   env: {
     es6: true
   },
-  extends: [
-    'plugin:vue/essential',
-    '@vue/standard'
-  ],
+  extends: [  ],
   parserOptions: {
     ecmaVersion: 2020
   },
   rules: {
     indent: ['error', 4, { SwitchCase: 1 }],
-    'vue/html-indent': ['error', 4 ],
-    'vue/script-indent': ['error', 4, {
-      baseIndent: 1,
-      switchCase: 1
-    }],
     'no-mixed-spaces-and-tabs': 0,
     'no-tabs': 0,
     "comma-dangle": ["error", {
@@ -30,7 +22,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['*.vue'],
+      files: ['.js'],
       rules: {
         indent: 'off'
       }
