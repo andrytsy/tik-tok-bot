@@ -4,24 +4,26 @@ const puppeteer = require('puppeteer');
     try {
         const browser = await puppeteer.launch({
             product: 'firefox',
-            headless: true,
+            headless: false,
         });
         const page = await browser.newPage();
-        await page.goto('https://tiktok.com');
+        await page.goto('https://www.tiktok.com');
         await page.waitForSelector('.login-button')
         await page.click('.login-button')
-        await page.waitForSelector('.iframe-container')
-        const authFrame = await page.frames().find(frame => frame.url().includes('login'))
+        await page.waitForSelector('.login-frame-container')
+        await page.waitForSelector('iframe[src^="https://www.tiktok.com/login/"]')
 
-        if (authFrame) {
-            authFrame.evaluate(() => {
+        const authFrame = await page.$('iframe[src^="https://www.tiktok.com/login/"]')
+        const authFrameContent = await authFrame.contentFrame();
+        await authFrameContent.waitForSelector('div[class^="channel-item-wrapper"]')
+        await authFrameContent.click('div[class^="channel-item-wrapper"]')
 
-            })
+        console.log("authFrameContent found! TikTok wins!");
+
+        if (!authFrame) {
+            console.log("Auth iFrame not found! TikTok wins!");
+            process.exit(0);
         }
-
-        page.on('console', (msg) => {
-            console.log('PAGE LOG:', page.frames().find(frame => frame.url().includes('login')))
-        });
 
         // await browser.close();
     } catch (e) {
