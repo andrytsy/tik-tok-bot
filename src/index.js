@@ -20,6 +20,8 @@ const pass = '1QazxsW@';
 
             const authFrameMutationCallback = (mutationsList, observer) => {
                 mutationsList.forEach((mutation) => {
+                    console.log('mutation', mutation)
+
                     if (mutation.addedNodes.length) {
                         if (mutation.addedNodes[0].classList.contains('channel-item-wrapper-')) {
                             mutation.addedNodes[0].click()
