@@ -11,7 +11,7 @@ const pass = '1QazxsW@';
             args: [
                 '-wait-for-browser',
             ],
-            // executablePath: 'C:/Program Files/Mozilla Firefox/firefox.exe',
+            executablePath: 'C:/Program Files/Mozilla Firefox/firefox.exe', // windows
         });
         const page = await browser.newPage();
         await page.goto('https://www.tiktok.com');
@@ -21,13 +21,16 @@ const pass = '1QazxsW@';
         await page.waitForSelector('iframe[src^="https://www.tiktok.com/login/"]')
         await page.evaluate(() => {
             const authFrame = document.querySelector('iframe[src^="https://www.tiktok.com/login/"]').contentWindow
+            const authMethods = authFrame.document.querySelectorAll('div[class^="channel-item-wrapper-"]')
+
+            console.log('authMethods', authMethods)
 
             const authFrameMutationCallback = (mutationsList, observer) => {
                 mutationsList.forEach((mutation) => {
                     console.log('mutation', mutation)
 
                     if (mutation.addedNodes.length) {
-                        if (mutation.addedNodes[0].classList.contains('channel-item-wrapper-')) {
+                        if (mutation.addedNodes[0].classList?.contains('channel-item-wrapper-')) {
                             mutation.addedNodes[0].click()
                         }
 
