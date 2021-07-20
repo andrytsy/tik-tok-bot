@@ -29,37 +29,30 @@ const pass = '1QazxsW@';
         await page.waitForSelector('.login-frame-container')
         await page.waitForSelector('iframe[src^="https://www.tiktok.com/login/"]')
         await page.evaluate(async () => {
-            const authFrame = document.querySelector('iframe[src^="https://www.tiktok.com/login/"]').onload(() => {
-                const authFrame = document.querySelector('iframe[src^="https://www.tiktok.com/login/"]').contentWindow
-                const authMethods = authFrame.document.querySelectorAll('div[class^="channel-item-wrapper-"]')
+            const authFrame = document.querySelector('iframe[src^="https://www.tiktok.com/login/"]').contentWindow
+            authFrame.onload = () => {
+                const authFrameMutationCallback = (mutationsList, observer) => {
+                    mutationsList.forEach((mutation) => {
+                        if (mutation.addedNodes.length) {
+                            console.log('mutation.addedNodes[0]', mutation.addedNodes[0])
 
-                console.log('authMethods', authMethods)
+                            if (mutation.addedNodes[0].classList?.contains('tiktok-app-container-')) {
 
-                if (authMethods.length) {
-                    authMethods[1].click();
-                } else  {
-                    const authFrameMutationCallback = (mutationsList, observer) => {
-                        mutationsList.forEach((mutation) => {
-                            if (mutation.addedNodes.length) {
-                                console.log('mutation.addedNodes[0]', mutation.addedNodes[0])
-
-                                if (mutation.addedNodes[0].classList?.contains('channel-item-wrapper-')) {
-                                    mutation.addedNodes[0].click();
-                                    observer.disconnect();
-                                }
+                                // mutation.addedNodes[0].click();
+                                // observer.disconnect();
                             }
-                        })
-                    }
-                    const observer = new MutationObserver(authFrameMutationCallback);
-
-                    observer.observe(authFrame.document.body, {
-                        characterData: true,
-                        attributes: true,
-                        childList: true,
-                        subtree: true,
-                    });
+                        }
+                    })
                 }
-            })
+                const observer = new MutationObserver(authFrameMutationCallback);
+
+                observer.observe(authFrame.document.body, {
+                    characterData: true,
+                    attributes: true,
+                    childList: true,
+                    subtree: true,
+                });
+            }
         })
 
         // await browser.close();
