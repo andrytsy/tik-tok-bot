@@ -1,4 +1,4 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-core');
 
 const email = 'mail.projects@yandex.ru';
 const pass = '1QazxsW@';
@@ -8,6 +8,10 @@ const pass = '1QazxsW@';
         const browser = await puppeteer.launch({
             product: 'firefox',
             headless: false,
+            args: [
+                '-wait-for-browser',
+            ],
+            // executablePath: 'C:/Program Files/Mozilla Firefox/firefox.exe',
         });
         const page = await browser.newPage();
         await page.goto('https://www.tiktok.com');
@@ -35,7 +39,7 @@ const pass = '1QazxsW@';
             }
             const observer = new MutationObserver(authFrameMutationCallback);
 
-            observer.observe(authFrame.document.body, {
+            observer.observe(authFrame.document, {
                 attributes: true,
                 childList: true,
                 subtree: true,
