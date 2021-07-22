@@ -1,4 +1,6 @@
 const puppeteer = require('puppeteer-core');
+// const StealthPlugin = require('puppeteer-extra-plugin-stealth')
+// puppeteer.use(StealthPlugin())
 const {
     delay,
 } = require('./helpers');

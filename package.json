@@ -5,14 +5,20 @@
   "main": "index.js",
   "scripts": {
     "start": "node src",
-    "start-auth": "node src/tiktokAuth.js"
+    "start-auth": "node src/tiktokAuth.js",
+    "start-captcha": "node src/geeTestCaptchaSolver.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "mongoose": "^5.13.3",
     "puppeteer": "^5.0.0",
-    "puppeteer-core": "^10.1.0"
+    "puppeteer-core": "^10.1.0",
+    "jimp": "^0.16.1",
+    "opencv-wasm": "^4.3.0-5",
+    "pixelmatch": "^5.2.1",
+    "puppeteer-extra": "^3.1.15",
+    "puppeteer-extra-plugin-stealth": "^2.6.5"
   },
   "devDependencies": {
     "eslint": "^6.7.2",
